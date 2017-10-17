@@ -24,6 +24,18 @@ Propõe-se, baseado no que é observado no vídeo, um modelo no software [Uppaal
 
 Cada um dos elementos citados será brevemente descrito nas subseções seguintes.
 
+### PlateCar (car)
+
+O modelo plate car consiste em um *trasition system* de três estados. 
+O estado **empty** é inicial e denomina o momento em que o carro não contêm placas e deve ser recarregado.
+Sua única possível transição é para o estado **loaded** que representa o carro logo após sua recarga.
+Em seguida, o carro deve aguardar no estado loaded até que uma mudança seja solicitada pelo canal broadcast *move_to_workspace*.
+Então, o carro passa para o estado **work_ready** em que serão realizadas tanto a localização das placas pela visão computacional, como a atuação dos robôs.
+O carro espera, por fim, uma mensagem para sair do espaço de trabalho e retorna para o estado empty quando suas placas acabam.
+
+Vale notar que número de placas carregado é representado pela constante fullPlates = 5.
+Não existem condições de guarda referentes ao número de placas pois escolheu-se que o sistema de visão computacional seria o único a realizar esta interface.
+
 [ref_video_theme]: https://www.youtube.com/watch?v=OIeRglPlnUU&feature=youtu.be
 [ref_kin]: http://kinemetrix.com
 [ref_uppaal]: http://www.uppaal.org
