@@ -2,16 +2,16 @@
 <!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
 <nta>
 	<declaration>// Place global declarations here.
-const int fullPlates = 5;
-int plates = fullPlates;
-// car
+const int fullPlates = 5; // número de placas a serem carregados após a transição empty -&gt; loaded
+int plates = fullPlates;  // número inicial de placas
+// car - controler
 chan car_loaded;
-// controler
-broadcast chan move_to_workspace;
 chan move_out_workspace;
-// vision
+// car - controler - vision
+broadcast chan move_to_workspace;
+// controler - vision
 chan plate_visible, plate_not_visible;
-// robot
+// controler - robot
 chan get_plate;
 </declaration>
 	<template>
@@ -181,6 +181,18 @@ robot = Robot();
 system car, controler, vision, robot;
     </system>
 	<queries>
+		<query>
+			<formula>A[] plates &lt;= fullPlates
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>A[] plates &gt;= 0
+			</formula>
+			<comment>
+			</comment>
+		</query>
 		<query>
 			<formula>A[] not deadlock
 			</formula>
