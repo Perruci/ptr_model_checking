@@ -31,9 +31,9 @@ O estado **empty** é inicial e denomina o momento em que o carro não contêm p
 Sua única possível transição é para o estado **loaded** que representa o carro logo após sua recarga.
 Em seguida, o carro deve aguardar no estado loaded até que uma mudança seja solicitada pelo canal broadcast *move_to_workspace*.
 Então, o carro passa para o estado **work_ready** em que serão realizadas tanto a localização das placas pela visão computacional, como a atuação dos robôs.
-O carro espera, por fim, uma mensagem para sair do espaço de trabalho e retorna para o estado empty quando suas placas acabam.
+O carro espera, por fim, uma mensagem para sair do espaço de trabalho e retorna para o estado **empty** quando suas placas acabam.
 
-Vale notar que número de placas carregado é representado pela constante fullPlates = 5.
+Vale notar que número de placas carregado é representado pela constante *fullPlates* = 5.
 Não existem condições de guarda referentes ao número de placas pois escolheu-se que o sistema de visão computacional seria o único a realizar esta interface.
 
 [ref_video_theme]: https://www.youtube.com/watch?v=OIeRglPlnUU&feature=youtu.be
