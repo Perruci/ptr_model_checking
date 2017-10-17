@@ -15,6 +15,15 @@ Ao longo do vídeo, percebe-se 3 principais processos:
 
 ## Modelagem Proposta
 
+### Objetivo
+
+Pretende-se modelar as interações em rede das diferentes tecnologias envolvidas no processo industrial mostrado no vídeo.
+Dessa maneira, pretende-se verificar por meio do model checking se as interações entre os processos foram modelados de forma adequada para um sistema lívre de deadlocks.
+Não foi considerada uma prioridade modelar os processos intermediários de interleaving envolvidos nos transition systems.
+Sua maioria, foi condensada em um único estado, com um tempo de execução mais longo.
+
+### Trasition Systems
+
 Propõe-se, baseado no que é observado no vídeo, um modelo no software [Uppaal][ref_uppaal] composto de quatro elementos:
 
 1. PlateCar: carro transportador de placas;
@@ -37,7 +46,7 @@ Existe, também, uma transição do modelo **PlateCar responsável** por recarre
 De forma semelhante, o **sistema de visão computacional** utiliza o **número de placas** como **condição de guarda**.
 Torna-se, portanto, responsável por adiministrar as influências desta variável no transition system como um todo.
 
-### Canais Utilizados
+### Channels Utilizados
 
 Foi utilizado um número razoável de canais de forma a garantir a sincronia entre os diversos transition systems.
 A adiministração das mudanças de estado por meio de handshake é essencial para um processo modularizado desta maneira.
