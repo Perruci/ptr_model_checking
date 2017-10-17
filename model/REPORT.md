@@ -24,6 +24,38 @@ Propõe-se, baseado no que é observado no vídeo, um modelo no software [Uppaal
 
 Cada um dos elementos citados será brevemente descrito nas subseções seguintes.
 
+### Variáveis Globais
+
+``` C
+const int fullPlates = 5; // número de placas a serem carregados após a transição empty -> loaded
+int plates = fullPlates;  // número inicial de placas
+```
+
+Por questões de verossimilhança, decidiu-se que apenas apenas o **robô** é capaz de diminuir o número de placas.
+Existe, também, uma transição do modelo **PlateCar responsável** por recarregar o número de placas para o valor *numPlates*.
+
+De forma semelhante, o **sistema de visão computacional** utiliza o **número de placas** como **condição de guarda**.
+Torna-se, portanto, responsável por adiministrar as influências desta variável no transition system como um todo.
+
+### Canais Utilizados
+
+Foi utilizado um número razoável de canais de forma a garantir a sincronia entre os diversos transition systems.
+A adiministração das mudanças de estado por meio de handshake é essencial para um processo modularizado desta maneira.
+
+``` C
+// car - controler
+chan car_loaded;
+chan move_out_workspace;
+// car - controler - vision
+broadcast chan move_to_workspace;
+// controler - vision
+chan plate_visible, plate_not_visible;
+// controler - robot
+chan get_plate;
+```
+
+## Descrição dos Modelos
+
 ### PlateCar (car)
 
 O modelo plate car consiste em um *trasition system* de três estados. 
