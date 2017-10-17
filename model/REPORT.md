@@ -78,9 +78,9 @@ O carro espera, por fim, uma mensagem para sair do espaço de trabalho e retorna
 Vale notar que número de placas carregado é representado pela constante *fullPlates* = 5.
 Não existem condições de guarda referentes ao número de placas pois escolheu-se que o sistema de visão computacional seria o único a realizar esta interface.
 
-![PlateCar Image][logo]
+![alt text][PlateCar Image]
 
-[logo]: https://github.com/Perruci/ptr_model_checking/tree/master/model/docs/plate_car.png "PlateCar Transiion System"
+[PlateCar Image]: https://github.com/Perruci/ptr_model_checking/tree/master/model/docs/plate_car.png "PlateCar Transiion System"
 
 [ref_video_theme]: https://www.youtube.com/watch?v=OIeRglPlnUU&feature=youtu.be
 [ref_kin]: http://kinemetrix.com
