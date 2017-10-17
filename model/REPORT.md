@@ -52,14 +52,15 @@ Foi utilizado um número razoável de canais de forma a garantir a sincronia ent
 A adiministração das mudanças de estado por meio de handshake é essencial para um processo modularizado desta maneira.
 
 ``` C
-// car - controler
+// car -> controler
 chan car_loaded;
+// controler -> car
 chan move_out_workspace;
-// car - controler - vision
+// car <- controler -> vision
 broadcast chan move_to_workspace;
-// controler - vision
+// controler <- vision
 chan plate_visible, plate_not_visible;
-// controler - robot
+// controler -> robot
 chan get_plate;
 ```
 
