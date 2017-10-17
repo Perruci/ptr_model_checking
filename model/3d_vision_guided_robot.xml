@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+const int fullPlates = 5;
+int plates = fullPlates;
+// car
+chan car_loaded;
+// controler
+broadcast chan move_to_workspace;
+chan move_out_workspace;
+// vision
+chan plate_visible, plate_not_visible;
+// robot
+chan get_plate;
+</declaration>
+	<template>
+		<name x="5" y="5">PlateCar</name>
+		<declaration>// Place local declarations here.</declaration>
+		<location id="id0" x="51" y="119">
+			<name x="-8" y="76">work_ready</name>
+		</location>
+		<location id="id1" x="51" y="-110">
+			<name x="41" y="-144">loaded</name>
+		</location>
+		<location id="id2" x="-102" y="0">
+			<name x="-161" y="-17">empty</name>
+		</location>
+		<init ref="id2"/>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="-153" y="127">move_out_workspace?</label>
+			<nail x="-25" y="119"/>
+			<nail x="-102" y="85"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="127" y="-8">move_to_workspace?</label>
+			<nail x="102" y="-93"/>
+			<nail x="102" y="76"/>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-144" y="-110">car_loaded!</label>
+			<label kind="assignment" x="-161" y="-127">plates = fullPlates</label>
+			<nail x="-102" y="-68"/>
+			<nail x="-42" y="-110"/>
+		</transition>
+	</template>
+	<template>
+		<name>Robot</name>
+		<location id="id3" x="8" y="-8">
+			<name x="34" y="-17">actuate</name>
+			<urgent/>
+		</location>
+		<location id="id4" x="-195" y="-8">
+			<name x="-272" y="-17">standby</name>
+		</location>
+		<init ref="id4"/>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id4"/>
+			<nail x="-17" y="68"/>
+			<nail x="-170" y="68"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-127" y="-93">get_plate?</label>
+			<label kind="assignment" x="-127" y="-76">plates -= 1</label>
+			<nail x="-170" y="-76"/>
+			<nail x="-25" y="-76"/>
+		</transition>
+	</template>
+	<template>
+		<name>Controler</name>
+		<location id="id5" x="-212" y="153">
+			<name x="-238" y="119">actuate</name>
+			<urgent/>
+		</location>
+		<location id="id6" x="-357" y="153">
+			<name x="-493" y="144">leave_workspace</name>
+		</location>
+		<location id="id7" x="-212" y="263">
+			<name x="-255" y="280">robot_work</name>
+			<urgent/>
+		</location>
+		<location id="id8" x="-68" y="153">
+			<name x="-51" y="145">ready_to_go</name>
+		</location>
+		<location id="id9" x="-212" y="-93">
+			<name x="-255" y="-76">wait_for_car</name>
+		</location>
+		<init ref="id9"/>
+		<transition>
+			<source ref="id8"/>
+			<target ref="id7"/>
+			<label kind="synchronisation" x="-42" y="212">move_to_workspace!</label>
+			<nail x="-68" y="229"/>
+			<nail x="-102" y="263"/>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id7"/>
+			<label kind="synchronisation" x="-161" y="187">get_plate!</label>
+			<nail x="-170" y="170"/>
+			<nail x="-170" y="221"/>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="-348" y="187">plate_visible?</label>
+			<nail x="-255" y="221"/>
+			<nail x="-255" y="170"/>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id9"/>
+			<label kind="synchronisation" x="-518" y="17">move_out_workspace!</label>
+			<nail x="-357" y="-68"/>
+			<nail x="-323" y="-93"/>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="-484" y="212">plate_not_visible?</label>
+			<nail x="-314" y="263"/>
+			<nail x="-357" y="221"/>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id8"/>
+			<label kind="synchronisation" x="-34" y="-93">car_loaded?</label>
+			<nail x="-102" y="-93"/>
+			<nail x="-68" y="-51"/>
+		</transition>
+	</template>
+	<template>
+		<name>Vision</name>
+		<location id="id10" x="-93" y="-17">
+			<name x="-204" y="-8">locate_plates</name>
+			<urgent/>
+		</location>
+		<location id="id11" x="-297" y="-17">
+			<name x="-280" y="-42">wait_for_car</name>
+		</location>
+		<init ref="id11"/>
+		<transition>
+			<source ref="id10"/>
+			<target ref="id11"/>
+			<label kind="guard" x="-238" y="68">plates &lt;= 0</label>
+			<label kind="synchronisation" x="-255" y="85">plate_not_visible!</label>
+			<nail x="-119" y="59"/>
+			<nail x="-263" y="59"/>
+		</transition>
+		<transition>
+			<source ref="id11"/>
+			<target ref="id10"/>
+			<label kind="synchronisation" x="-263" y="-110">move_to_workspace?</label>
+			<nail x="-263" y="-85"/>
+			<nail x="-127" y="-85"/>
+		</transition>
+		<transition>
+			<source ref="id10"/>
+			<target ref="id10"/>
+			<label kind="guard" x="17" y="-42">plates &gt; 0</label>
+			<label kind="synchronisation" x="17" y="-25">plate_visible!</label>
+			<nail x="0" y="-93"/>
+			<nail x="0" y="59"/>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+car = PlateCar();
+controler = Controler();
+vision = Vision();
+robot = Robot();
+// List one or more processes to be composed into a system.
+system car, controler, vision, robot;
+    </system>
+	<queries>
+		<query>
+			<formula>A[] not deadlock
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; deadlock
+			</formula>
+			<comment>
+			</comment>
+		</query>
+	</queries>
+</nta>
